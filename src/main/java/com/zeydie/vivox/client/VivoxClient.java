@@ -12,13 +12,13 @@ import java.nio.file.Path;
 
 public class VivoxClient extends Vivox {
     @Getter
-    private static VivoxClientAPI vivoxClientAPI = new VivoxClientAPI();
+    private static final @NotNull VivoxClientAPI vivoxClientAPI = new VivoxClientAPI();
     @Getter
-    private static VivoxDevicesAPI vivoxDevicesAPI = new VivoxDevicesAPI();
+    private static final @NotNull VivoxDevicesAPI vivoxDevicesAPI = new VivoxDevicesAPI();
     @Getter
-    private static VivoxChannelsAPI vivoxChannelsAPI = new VivoxChannelsAPI();
+    private static final @NotNull VivoxChannelsAPI vivoxChannelsAPI = new VivoxChannelsAPI();
     @Getter
-    private static VivoxClientParticipantAPI vivoxClientParticipantAPI = new VivoxClientParticipantAPI();
+    private static final @NotNull VivoxClientParticipantAPI vivoxClientParticipantAPI = new VivoxClientParticipantAPI();
 
     @Override
     public void pre() {
@@ -42,6 +42,10 @@ public class VivoxClient extends Vivox {
         vivoxDevicesAPI.post();
         vivoxChannelsAPI.post();
         vivoxClientParticipantAPI.post();
+    }
+
+    public void exit() {
+        vivoxClientAPI.exit();
     }
 
     public static @NotNull Path getConfigsPath() {

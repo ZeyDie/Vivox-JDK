@@ -1,26 +1,26 @@
-package com.zeydie.vivox.client.api.callbacks;
+package wtf.nano.pdxvoice.lib;
 
 import lombok.NonNull;
 
 public interface IParticipantCallback {
     void onParticipantAdded(
+            @NonNull final String sip,
+            @NonNull final String participant,
             @NonNull final String user,
-            @NonNull final String channel,
-            @NonNull final String name,
             final boolean local
     );
 
     void onParticipantRemoved(
+            @NonNull final String sip,
+            @NonNull final String participant,
             @NonNull final String user,
-            @NonNull final String channel,
-            @NonNull final String name,
             final boolean local
     );
 
     void onParticipantUpdate(
+            @NonNull final String sip,
+            @NonNull final String participant,
             @NonNull final String user,
-            @NonNull final String channel,
-            @NonNull final String name,
             final boolean speaking,
             final double energy,
             final boolean local

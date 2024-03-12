@@ -11,10 +11,14 @@ import com.zeydie.vivox.common.IInitialization;
 import com.zeydie.vivox.common.Vivox;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public final class VivoxDevicesAPI implements IInitialization {
     @Getter
@@ -32,37 +36,41 @@ public final class VivoxDevicesAPI implements IInitialization {
     private static final int maxOutputVolume = 100;
 
     @Getter
-    private static final ClientDevicesConfig clientDevicesConfig = new ClientDevicesConfig(VivoxClient.getConfigsPath());
+    private static final @NotNull ClientDevicesConfig clientDevicesConfig = new ClientDevicesConfig(VivoxClient.getConfigsPath());
 
     @Override
     public void pre() {
-        VivoxDevicesNative.getCaptureDevices(
+        VivoxDevicesNative.getInputDevices(
                 (names, ids, currentDevice) -> {
+                    Vivox.info("Devices " + Arrays.toString(names));
+                    Vivox.info("IDs " + Arrays.toString(ids));
                     Vivox.info("Current input device " + currentDevice);
-
-                    this.getSortedDevices(names);
-                    //TODO Set devices to config
+                    clientDevicesConfig.getData().setInputs(this.getSortedDevices(names));
                 }
         );
-        VivoxDevicesNative.getRenderDevices(
+        VivoxDevicesNative.getOutputDevices(
                 (names, ids, currentDevice) -> {
-                    Vivox.info("Current output device " + currentDevice);
-
-                    this.getSortedDevices(names);
-                    //TODO Set devices to config
+                    Vivox.info("Devices " + Arrays.toString(names));
+                    Vivox.info("IDs " + Arrays.toString(ids));
+                    Vivox.info("Current input device " + currentDevice);
+                    clientDevicesConfig.getData().setOutputs(this.getSortedDevices(names));
                 }
         );
     }
 
+    @SneakyThrows
     @Override
     public void init() {
+        while (!clientDevicesConfig.getData().isDevicesInitialized())
+            TimeUnit.MILLISECONDS.sleep(250);
+
         initInputDevice();
         initOutputDevice();
     }
 
     @Override
     public void post() {
-
+        clientDevicesConfig.save();
     }
 
     private @NotNull List<String> getSortedDevices(@NonNull final String[] names) {
@@ -70,7 +78,7 @@ public final class VivoxDevicesAPI implements IInitialization {
                 .stream()
                 .sorted((o1, o2) -> o1.equalsIgnoreCase("Default System Device") ? -1 : 0)
                 .filter(s -> !s.isEmpty())
-                .toList();
+                .collect(Collectors.toList());
     }
 
     /***

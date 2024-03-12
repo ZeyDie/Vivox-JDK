@@ -1,4 +1,4 @@
-package com.zeydie.vivox.client.api.callbacks;
+package wtf.nano.pdxvoice.lib;
 
 public interface ISoundLevelCallback {
     void onSoundLevel(final int level);

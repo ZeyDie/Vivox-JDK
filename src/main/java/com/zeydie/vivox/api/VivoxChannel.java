@@ -27,6 +27,10 @@ public class VivoxChannel {
         return this;
     }
 
+    public @NotNull String getChannelName() {
+        return this.sipData.getParticipantData().getChannelName();
+    }
+
     public boolean isConnecting() {
         return this.status == Status.CONNECTING;
     }
@@ -37,6 +41,10 @@ public class VivoxChannel {
 
     public boolean isDisconnected() {
         return this.status == Status.DISCONNECTED;
+    }
+
+    public boolean equals(@NonNull final VivoxChannel vivoxChannel) {
+        return this.getSipData().getParticipantData().getChannelName().equals(vivoxChannel.getSipData().getParticipantData().getChannelName());
     }
 
     public enum Status {

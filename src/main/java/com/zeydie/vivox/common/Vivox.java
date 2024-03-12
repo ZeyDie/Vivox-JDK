@@ -3,21 +3,22 @@ package com.zeydie.vivox.common;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.java.Log;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Log
 public abstract class Vivox implements IInitialization {
-    private static final boolean test = false;
+    private static final boolean test = true;
     private static final boolean info = true || test;
     private static final boolean debug = false || test;
     private static final boolean warning = true || test;
 
     @Getter
-    private static final Path vivoxPath = Paths.get("vivox");
+    private static final @NotNull Path vivoxPath = Paths.get("vivox");
     @Getter
-    private static final Path configsPath = vivoxPath.resolve("configs");
+    private static final @NotNull Path configsPath = vivoxPath.resolve("configs");
 
     public static void info(
             @NonNull final String message,
@@ -50,5 +51,4 @@ public abstract class Vivox implements IInitialization {
         if (warning)
             log.fine(String.format(message, objects));
     }
-
 }

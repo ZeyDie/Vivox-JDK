@@ -108,6 +108,10 @@ public class ClientDevicesConfig extends FileConfig {
             return this.outputs.get(this.outputId);
         }
 
+        public boolean isDevicesInitialized() {
+            return !this.inputs.isEmpty() && !this.outputs.isEmpty();
+        }
+
         public void save() {
             VivoxDevicesAPI.getClientDevicesConfig().save();
         }

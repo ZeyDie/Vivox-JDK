@@ -1,15 +1,16 @@
 package com.zeydie.vivox.client.api.natives;
 
 import com.zeydie.vivox.client.api.VivoxClientAPI;
-import com.zeydie.vivox.client.api.callbacks.IStateCallbacks;
+import com.zeydie.vivox.client.api.callbacks.IVivoxStateCallbacks;
 import com.zeydie.vivox.common.Vivox;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.val;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import wtf.nano.pdxvoice.lib.VivoxAPI;
 
 import java.io.File;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,20 +31,22 @@ public final class VivoxClientNative {
     }
 
     private static void loadLib(@NonNull final String fileName) {
-        @NonNull final String resource = "/" + arch + "-" + fileName;
+        @NonNull val resource = "/" + arch + "-" + fileName;
 
-        Vivox.info("Starting lib: %s", resource);
+        try (@Nullable val inputStream = VivoxClientAPI.class.getResourceAsStream(resource)) {
+            Vivox.info("Loading lib %s", resource);
 
-        try (@Nullable final InputStream inputStream = VivoxClientAPI.class.getResourceAsStream(resource)) {
             if (inputStream == null)
                 throw new RuntimeException("Can't find " + resource);
 
-            @Nullable final File[] files = cacheFolder.toFile().listFiles();
+            @Nullable val files = cacheFolder.toFile().listFiles();
 
             if (files != null)
-                Arrays.stream(files).filter(filtered -> filtered != null && filtered.getName().endsWith("png")).forEach(File::delete);
+                Arrays.stream(files)
+                        .filter(filtered -> filtered != null && filtered.getName().endsWith("png"))
+                        .forEach(File::delete);
 
-            @NonNull final File file = vivoxFolder.resolve(fileName).toFile();
+            @NonNull val file = vivoxFolder.resolve(fileName).toFile();
 
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
@@ -51,30 +54,49 @@ public final class VivoxClientNative {
                 Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
 
-            System.load(file.getAbsolutePath());
+            @NonNull val absolutePath = file.getAbsolutePath();
 
-            Vivox.info("%s is loaded!", file.getAbsolutePath());
+            System.load(absolutePath);
+
+            Vivox.info("%s is loaded!", absolutePath);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 
-    public static native void init(
+    public static void init(
             @NonNull final String server,
             @NonNull final String user,
             @NonNull final String displayName
-    );
+    ) {
+        Vivox.debug("Vivox Init %s %s %s", server, user, displayName);
+        VivoxAPI.init(server, user, displayName);
+    }
 
-    public static native void connect();
+    public static void connect() {
+        Vivox.info("Vivox Connecting");
+        VivoxAPI.connect();
+    }
 
-    public static native void login(
+    public static void login(
             @NonNull final String player,
             @NonNull final String token
-    );
+    ) {
+        Vivox.debug("Vivox Login %s %s", player, token);
+        VivoxAPI.login(player, token);
+    }
 
-    public static native void setStateCallbacks(@NonNull final IStateCallbacks stateCallback);
+    public static void setStateCallbacks(@NonNull final IVivoxStateCallbacks stateCallback) {
+        VivoxAPI.setStateCallbacks(stateCallback);
+    }
 
-    public static native void disconnect();
+    public static void disconnect() {
+        Vivox.info("Vivox Disconnect");
+        VivoxAPI.disconnect();
+    }
 
-    public static native void logout();
+    public static void logout() {
+        Vivox.info("Vivox Logout");
+        VivoxAPI.logout();
+    }
 }

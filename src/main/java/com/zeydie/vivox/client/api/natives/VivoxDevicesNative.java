@@ -1,28 +1,49 @@
 package com.zeydie.vivox.client.api.natives;
 
-import com.zeydie.vivox.client.api.callbacks.ICaptureDevicesCallback;
-import com.zeydie.vivox.client.api.callbacks.IRenderDevices;
-import com.zeydie.vivox.client.api.callbacks.ISoundLevelCallback;
+import com.zeydie.vivox.client.api.callbacks.IInputDevicesCallback;
+import com.zeydie.vivox.client.api.callbacks.IOutputDevicesCallback;
+import com.zeydie.vivox.client.api.callbacks.ISoundLevelDeviceCallback;
 import lombok.NonNull;
+import wtf.nano.pdxvoice.lib.VivoxAPI;
 
 public final class VivoxDevicesNative {
-    public static native void getCaptureDevices(@NonNull final ICaptureDevicesCallback captureDevicesCallback);
+    public static void getInputDevices(@NonNull final IInputDevicesCallback captureDevicesCallback) {
+        VivoxAPI.getCaptureDevices(captureDevicesCallback);
+    }
 
-    public static native void getRenderDevices(@NonNull final IRenderDevices renderDevices);
+    public static void getOutputDevices(@NonNull final IOutputDevicesCallback renderDevices) {
+        VivoxAPI.getRenderDevices(renderDevices);
+    }
 
-    public static native void setCaptureDevice(@NonNull final String device);
+    public static void setCaptureDevice(@NonNull final String device) {
+        VivoxAPI.setCaptureDevice(device);
+    }
 
-    public static native void setRenderDevice(@NonNull final String device);
+    public static void setRenderDevice(@NonNull final String device) {
+        VivoxAPI.setRenderDevice(device);
+    }
 
-    public static native void setMicMuted(final boolean muted);
+    public static void setMicMuted(final boolean muted) {
+        VivoxAPI.setMicMuted(muted);
+    }
 
-    public static native void setSpeakerLevel(final int level);
+    public static void setSpeakerLevel(final int level) {
+        VivoxAPI.setSpeakerLevel(level);
+    }
 
-    public static native void setMicLevel(final int level);
+    public static void setMicLevel(final int level) {
+        VivoxAPI.setMicLevel(level);
+    }
 
-    public static native void querySpeakerLevel(@NonNull final ISoundLevelCallback soundLevelCallback);
+    public static void querySpeakerLevel(@NonNull final ISoundLevelDeviceCallback soundLevelCallback) {
+        VivoxAPI.querySpeakerLevel(soundLevelCallback);
+    }
 
-    public static native void queryMicLevel(@NonNull final ISoundLevelCallback soundLevelCallback);
+    public static void queryMicLevel(@NonNull final ISoundLevelDeviceCallback soundLevelCallback) {
+        VivoxAPI.queryMicLevel(soundLevelCallback);
+    }
 
-    public static native void setSelfMuted();
+    public static void setSelfMuted() {
+        VivoxAPI.setSelfMuted();
+    }
 }

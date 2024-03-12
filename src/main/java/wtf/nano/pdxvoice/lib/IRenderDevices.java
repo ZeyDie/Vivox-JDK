@@ -1,4 +1,4 @@
-package com.zeydie.vivox.client.api.callbacks;
+package wtf.nano.pdxvoice.lib;
 
 import lombok.NonNull;
 
