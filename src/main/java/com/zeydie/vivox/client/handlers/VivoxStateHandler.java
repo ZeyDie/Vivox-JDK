@@ -8,6 +8,9 @@ import lombok.NonNull;
 
 @Getter
 public class VivoxStateHandler implements IVivoxStateCallbacks {
+    private int lastErrorCode;
+    private String lastError;
+
     @Override
     public void onConnect() {
         Vivox.info("Connected to Vivox Server");
@@ -27,7 +30,10 @@ public class VivoxStateHandler implements IVivoxStateCallbacks {
             final int code,
             final @NonNull String error
     ) {
-        if (code != -1)
-            Vivox.error("Error: {} {}", code, error);
+        if (code != -1) {
+            Vivox.error("{} {}", code, error);
+            this.lastErrorCode = code;
+            this.lastError = error;
+        }
     }
 }

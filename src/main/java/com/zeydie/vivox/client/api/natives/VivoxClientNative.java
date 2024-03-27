@@ -5,6 +5,7 @@ import com.zeydie.vivox.client.api.callbacks.IVivoxStateCallbacks;
 import com.zeydie.vivox.common.Vivox;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public final class VivoxClientNative {
     @Getter
@@ -78,12 +80,16 @@ public final class VivoxClientNative {
         VivoxAPI.connect();
     }
 
+    @SneakyThrows
     public static void login(
             @NonNull final String player,
             @NonNull final String token
     ) {
         Vivox.debug("Vivox Login {} {}", player, token);
         VivoxAPI.login(player, token);
+
+        while (!VivoxClientAPI.isLogin())
+            TimeUnit.MILLISECONDS.sleep(200);
     }
 
     public static void setStateCallbacks(@NonNull final IVivoxStateCallbacks stateCallback) {

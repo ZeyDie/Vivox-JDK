@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-@Log
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class VivoxClientTest {
     private static final VivoxClient vivoxClient = new VivoxClient();

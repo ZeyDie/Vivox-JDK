@@ -8,21 +8,25 @@ import com.zeydie.vivox.client.handlers.ParticipantHandler;
 import com.zeydie.vivox.client.handlers.VivoxStateHandler;
 import com.zeydie.vivox.common.IService;
 import com.zeydie.vivox.common.Vivox;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.val;
+import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.TimeUnit;
+
 public final class VivoxClientAPI implements IService {
+    private @NotNull String player = "ZeyDie";
+
+    @Getter
+    private static final @NotNull VivoxStateHandler vivoxStateHandler = new VivoxStateHandler();
+    @Getter
+    private static final @NotNull ParticipantHandler participantHandler = new ParticipantHandler();
+
     @Setter
     @Getter
     private static boolean connected;
     @Setter
     @Getter
     private static boolean login;
-
-    private @NotNull String player = "ZeyDie";
 
     @Getter
     private static final @NotNull ClientVivoxConfig clientVivoxConfig = new ClientVivoxConfig(VivoxClient.getConfigsPath());
@@ -32,13 +36,14 @@ public final class VivoxClientAPI implements IService {
         VivoxClientNative.loadLibs();
     }
 
+    @SneakyThrows
     @Override
     public void init() {
         Vivox.info("Initialization VivoxAPI...");
 
-        VivoxClientNative.setStateCallbacks(new VivoxStateHandler());
+        VivoxClientNative.setStateCallbacks(vivoxStateHandler);
 
-        VivoxClientParticipantNative.setParticipantCallbacks(new ParticipantHandler());
+        VivoxClientParticipantNative.setParticipantCallbacks(participantHandler);
 
         @NonNull val data = clientVivoxConfig.getData();
 
@@ -48,6 +53,9 @@ public final class VivoxClientAPI implements IService {
                 this.player
         );
         VivoxClientNative.connect();
+
+        while (!this.isConnected())
+            TimeUnit.MILLISECONDS.sleep(250);
     }
 
     @Override
