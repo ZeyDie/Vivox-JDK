@@ -3,7 +3,7 @@ package com.zeydie.vivox.client.api;
 import com.google.common.collect.Maps;
 import com.zeydie.vivox.api.VivoxChannel;
 import com.zeydie.vivox.client.api.natives.VivoxChannelsNative;
-import com.zeydie.vivox.common.IInitialization;
+import com.zeydie.vivox.common.IService;
 import com.zeydie.vivox.common.Vivox;
 import lombok.NonNull;
 import lombok.val;
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public final class VivoxChannelsAPI implements IInitialization {
+public final class VivoxChannelsAPI implements IService {
     private static final @NotNull Map<String, VivoxChannel> vivoxChannels = Maps.newHashMap();
 
     @Override
@@ -67,7 +67,7 @@ public final class VivoxChannelsAPI implements IInitialization {
     }
 
     public static void leaveFromChannel(@NonNull final String channelName) {
-        Vivox.info("Leaving from channel %s...", channelName);
+        Vivox.info("Leaving from channel {}...", channelName);
         VivoxChannelsNative.leaveChannel(channelName);
     }
 
@@ -79,26 +79,26 @@ public final class VivoxChannelsAPI implements IInitialization {
         @Nullable val vivoxChannel = vivoxChannels.get(channelName);
 
         if (vivoxChannel == null) {
-            Vivox.error("Can't found channel %s!", channelName);
+            Vivox.error("Can't found channel {}!", channelName);
             return;
         }
         if (vivoxChannel.isConnecting()) {
-            Vivox.warning("Channel %s is connecting!", channelName);
+            Vivox.warning("Channel {} is connecting!", channelName);
             return;
         }
         if (vivoxChannel.isConnected()) {
-            Vivox.warning("Channel %s is already connected!", channelName);
+            Vivox.warning("Channel {} is already connected!", channelName);
             return;
         }
 
-        Vivox.info("Join to channel %s...", channelName);
+        Vivox.info("Join to channel {}...", channelName);
 
         vivoxChannel.setStatus(VivoxChannel.Status.CONNECTING);
 
         VivoxChannelsNative.joinChannel(
                 vivoxChannel.getChannelName(),
-                vivoxChannel.getSipData().getSip(),
-                vivoxChannel.getTokenData().getToken()
+                vivoxChannel.getSip(),
+                vivoxChannel.getToken()
         );
     }
 }

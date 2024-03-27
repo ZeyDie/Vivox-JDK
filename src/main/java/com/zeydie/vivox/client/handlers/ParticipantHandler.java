@@ -21,7 +21,7 @@ public class ParticipantHandler implements IChannelParticipantCallback {
             final boolean local
     ) {
         Vivox.debug(
-                "Participant added: %s\n   Channel: %s\n   User: %s\n   Local: %b",
+                "Participant added: {}\n   Channel: {}\n   User: {}\n   Local: {}",
                 sip,
                 participant,
                 user,
@@ -32,7 +32,7 @@ public class ParticipantHandler implements IChannelParticipantCallback {
             @Nullable val vivoxChannel = VivoxChannelsAPI.getVivoxChannel(new ParticipantData(participant).getChannelName());
 
             if (vivoxChannel == null) {
-                Vivox.warning("Can't found channel %s!", participant);
+                Vivox.warning("Can't found channel {}!", participant);
                 return;
             }
 
@@ -48,7 +48,7 @@ public class ParticipantHandler implements IChannelParticipantCallback {
             final boolean local
     ) {
         Vivox.debug(
-                "Participant removed: %s\n   Channel: %s\n   User: %s\n   Local: %b",
+                "Participant removed: {}\n   Channel: {}\n   User: {}\n   Local: {}",
                 sip,
                 participant,
                 user,
@@ -59,7 +59,7 @@ public class ParticipantHandler implements IChannelParticipantCallback {
             @Nullable val vivoxChannel = VivoxChannelsAPI.getVivoxChannel(new ParticipantData(participant).getChannelName());
 
             if (vivoxChannel == null) {
-                Vivox.warning("Can't found channel %s!", participant);
+                Vivox.warning("Can't found channel {}!", participant);
                 return;
             }
 
@@ -77,7 +77,7 @@ public class ParticipantHandler implements IChannelParticipantCallback {
             final boolean local
     ) {
         Vivox.debug(
-                "Participant update: %s\n   Channel: %s\n   User: %s\n   Speaking: %b\n   Energy: %f\n   Local: %b",
+                "Participant update: {}\n   Channel: {}\n   User: {}\n   Speaking: {}\n   Energy: {}\n   Local: {}",
                 sip,
                 participant,
                 user,

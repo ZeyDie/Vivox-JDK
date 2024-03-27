@@ -2,6 +2,7 @@ package com.zeydie.vivox.client.configs;
 
 import com.google.common.collect.Lists;
 import com.zeydie.vivox.client.api.VivoxDevicesAPI;
+import com.zeydie.vivox.client.devices.VivoxInputDevice;
 import com.zeydie.vivox.common.configs.FileConfig;
 import lombok.Builder;
 import lombok.Data;
@@ -20,13 +21,7 @@ public class ClientDevicesConfig extends FileConfig {
     public ClientDevicesConfig(@NonNull final Path directory) {
         super(directory.resolve("devices.json").toFile());
 
-        this.data = super.readData(
-                Data
-                        .builder()
-                        .inputs(Lists.newArrayList())
-                        .outputs(Lists.newArrayList())
-                        .build()
-        );
+        this.data = super.readData(Data.builder().build());
         this.save();
     }
 
@@ -41,10 +36,13 @@ public class ClientDevicesConfig extends FileConfig {
         private int outputId;
         private int inputVolume;
         private int outputVolume;
-        private boolean buttonSpeaking;
+        @Builder.Default
+        private VivoxInputDevice.SpeakerMode speakerMode = VivoxInputDevice.SpeakerMode.BUTTON;
 
-        private @NotNull List<String> inputs;
-        private @NotNull List<String> outputs;
+        @Builder.Default
+        private @NotNull List<String> inputs = Lists.newArrayList();
+        @Builder.Default
+        private @NotNull List<String> outputs = Lists.newArrayList();
 
         public @NotNull Data nextInputId() {
             this.inputId += 1;
@@ -64,8 +62,8 @@ public class ClientDevicesConfig extends FileConfig {
             return this;
         }
 
-        public @NotNull Data switchButtonSpeaking() {
-            this.buttonSpeaking = !this.buttonSpeaking;
+        public @NotNull Data nextSpeakerMode() {
+            this.speakerMode = this.speakerMode.nextMode();
 
             return this;
         }

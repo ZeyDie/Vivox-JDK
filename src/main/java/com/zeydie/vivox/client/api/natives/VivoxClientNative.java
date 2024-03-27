@@ -34,7 +34,7 @@ public final class VivoxClientNative {
         @NonNull val resource = "/" + arch + "-" + fileName;
 
         try (@Nullable val inputStream = VivoxClientAPI.class.getResourceAsStream(resource)) {
-            Vivox.info("Loading lib %s", resource);
+            Vivox.info("Loading lib {}", resource);
 
             if (inputStream == null)
                 throw new RuntimeException("Can't find " + resource);
@@ -58,7 +58,7 @@ public final class VivoxClientNative {
 
             System.load(absolutePath);
 
-            Vivox.info("%s is loaded!", absolutePath);
+            Vivox.info("{} is loaded!", absolutePath);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -69,7 +69,7 @@ public final class VivoxClientNative {
             @NonNull final String user,
             @NonNull final String displayName
     ) {
-        Vivox.debug("Vivox Init %s %s %s", server, user, displayName);
+        Vivox.debug("Vivox Init {} {} {}", server, user, displayName);
         VivoxAPI.init(server, user, displayName);
     }
 
@@ -82,7 +82,7 @@ public final class VivoxClientNative {
             @NonNull final String player,
             @NonNull final String token
     ) {
-        Vivox.debug("Vivox Login %s %s", player, token);
+        Vivox.debug("Vivox Login {} {}", player, token);
         VivoxAPI.login(player, token);
     }
 

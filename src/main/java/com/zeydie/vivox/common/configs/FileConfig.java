@@ -10,7 +10,7 @@ public abstract class FileConfig {
     private final @NotNull SGsonFile gsonFile;
 
     public FileConfig(@NonNull final File file) {
-        this.gsonFile = new SGsonFile(file);
+        this.gsonFile = new SGsonFile(file).setPretty();
     }
 
     public <O> void save(@NonNull final O object) {

@@ -1,5 +1,6 @@
 package com.zeydie.vivox.client.devices;
 
+import com.zeydie.vivox.client.api.VivoxDevicesAPI;
 import com.zeydie.vivox.client.api.natives.VivoxDevicesNative;
 import com.zeydie.vivox.common.Vivox;
 import lombok.Data;
@@ -13,21 +14,22 @@ import org.jetbrains.annotations.NotNull;
 public class VivoxInputDevice extends VivoxDevice {
     private boolean banned;
     private boolean talking;
-    private boolean buttonSpeaking;
+    private SpeakerMode speakerMode;
 
     @Override
     public void init() {
         @NonNull val device = super.getDevice();
         val volume = super.getVolume();
 
-        Vivox.info("Set input device %s = %d", device, volume);
+        Vivox.info("Set input device '{}' = {}", device, volume);
 
         VivoxDevicesNative.setCaptureDevice(device);
         VivoxDevicesNative.setMicLevel(volume);
 
-        this.talking = this.buttonSpeaking;
+        this.speakerMode = VivoxDevicesAPI.getClientDevicesConfig().getData().getSpeakerMode();
+        this.talking = this.speakerMode.isVoice();
 
-        Vivox.info("Input device %s is talking now ", device, this.talking);
+        Vivox.info("Input device '{}' is talking now {}, speaker mode {}", device, this.talking, this.speakerMode);
     }
 
     public @NotNull VivoxInputDevice setTalking(final boolean value) {
@@ -43,7 +45,32 @@ public class VivoxInputDevice extends VivoxDevice {
     public void update() {
         if (this.banned && this.talking)
             this.talking = false;
-        else if (!this.banned && this.buttonSpeaking)
+        else if (!this.banned && this.speakerMode.isButton())
             this.talking = true;
+    }
+
+    public static enum SpeakerMode {
+        BUTTON, VOICE;
+
+        public boolean isButton() {
+            return this == BUTTON;
+        }
+
+        public boolean isVoice() {
+            return this == VOICE;
+        }
+
+        public @NotNull SpeakerMode nextMode() {
+            switch (this) {
+                case VOICE -> {
+                    return BUTTON;
+                }
+                case BUTTON -> {
+                    return VOICE;
+                }
+            }
+
+            return BUTTON;
+        }
     }
 }

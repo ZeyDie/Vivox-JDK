@@ -16,7 +16,7 @@ public class VivoxStateHandler implements IVivoxStateCallbacks {
 
     @Override
     public void onLoginStateChanged(final int state) {
-        Vivox.info("State: %d", state);
+        Vivox.info("State: {}", state);
 
         if (state == 1)
             VivoxClientAPI.setLogin(true);
@@ -28,6 +28,6 @@ public class VivoxStateHandler implements IVivoxStateCallbacks {
             final @NonNull String error
     ) {
         if (code != -1)
-            Vivox.error("Error: %d %s", code, error);
+            Vivox.error("Error: {} {}", code, error);
     }
 }
