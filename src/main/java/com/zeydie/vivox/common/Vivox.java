@@ -2,14 +2,14 @@ package com.zeydie.vivox.common;
 
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@Log
-public abstract class Vivox implements IInitialization {
+@Log4j2
+public abstract class Vivox implements IService {
     private static final boolean test = true;
     private static final boolean info = true || test;
     private static final boolean debug = false || test;
@@ -25,7 +25,7 @@ public abstract class Vivox implements IInitialization {
             final Object... objects
     ) {
         if (info)
-            log.info(String.format(message, objects));
+            log.info(message, objects);
     }
 
     public static void debug(
@@ -33,7 +33,7 @@ public abstract class Vivox implements IInitialization {
             final Object... objects
     ) {
         if (debug)
-            log.info(String.format(message, objects));
+            log.info(message, objects);
     }
 
     public static void warning(
@@ -41,7 +41,7 @@ public abstract class Vivox implements IInitialization {
             final Object... objects
     ) {
         if (warning)
-            log.warning(String.format(message, objects));
+            log.warn(message, objects);
     }
 
     public static void error(
@@ -49,6 +49,6 @@ public abstract class Vivox implements IInitialization {
             final Object... objects
     ) {
         if (warning)
-            log.fine(String.format(message, objects));
+            log.error(message, objects);
     }
 }

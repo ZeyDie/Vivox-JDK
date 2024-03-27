@@ -2,11 +2,11 @@ package com.zeydie.vivox.client.api;
 
 import com.zeydie.vivox.client.VivoxClient;
 import com.zeydie.vivox.client.configs.ClientParticipantsConfig;
-import com.zeydie.vivox.common.IInitialization;
+import com.zeydie.vivox.common.IService;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
-public final class VivoxClientParticipantAPI implements IInitialization {
+public final class VivoxClientParticipantAPI implements IService {
     @Getter
     private static final @NotNull ClientParticipantsConfig clientParticipantsConfig = new ClientParticipantsConfig(VivoxClient.getConfigsPath());
 

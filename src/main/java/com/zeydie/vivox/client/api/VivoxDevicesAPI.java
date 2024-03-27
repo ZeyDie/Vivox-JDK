@@ -7,7 +7,7 @@ import com.zeydie.vivox.client.configs.ClientDevicesConfig;
 import com.zeydie.vivox.client.devices.VivoxDevice;
 import com.zeydie.vivox.client.devices.VivoxInputDevice;
 import com.zeydie.vivox.client.devices.VivoxOutputDevice;
-import com.zeydie.vivox.common.IInitialization;
+import com.zeydie.vivox.common.IService;
 import com.zeydie.vivox.common.Vivox;
 import lombok.Getter;
 import lombok.NonNull;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public final class VivoxDevicesAPI implements IInitialization {
+public final class VivoxDevicesAPI implements IService {
     @Getter
     private static final @NotNull VivoxInputDevice inputDevice = new VivoxInputDevice();
     @Getter
@@ -42,17 +42,17 @@ public final class VivoxDevicesAPI implements IInitialization {
     public void pre() {
         VivoxDevicesNative.getInputDevices(
                 (names, ids, currentDevice) -> {
-                    Vivox.info("Devices " + Arrays.toString(names));
-                    Vivox.info("IDs " + Arrays.toString(ids));
-                    Vivox.info("Current input device " + currentDevice);
+                    Vivox.debug("Input Devices {}", Arrays.toString(names));
+                    Vivox.debug("IDs {}", Arrays.toString(ids));
+                    Vivox.debug("Current input device: {}", currentDevice);
                     clientDevicesConfig.getData().setInputs(this.getSortedDevices(names));
                 }
         );
         VivoxDevicesNative.getOutputDevices(
                 (names, ids, currentDevice) -> {
-                    Vivox.info("Devices " + Arrays.toString(names));
-                    Vivox.info("IDs " + Arrays.toString(ids));
-                    Vivox.info("Current input device " + currentDevice);
+                    Vivox.debug("Output Devices {}", Arrays.toString(names));
+                    Vivox.debug("IDs {}", Arrays.toString(ids));
+                    Vivox.debug("Current output device: {}", currentDevice);
                     clientDevicesConfig.getData().setOutputs(this.getSortedDevices(names));
                 }
         );
@@ -101,7 +101,7 @@ public final class VivoxDevicesAPI implements IInitialization {
     }
 
     public static @NotNull VivoxDevice setInputVolume(final int volume) {
-        Vivox.debug("Input volume %d", volume);
+        Vivox.debug("Input volume {}", volume);
         return inputDevice.setVolume(volume);
     }
 
@@ -121,7 +121,7 @@ public final class VivoxDevicesAPI implements IInitialization {
     }
 
     public static @NotNull VivoxDevice setOutputVolume(final int volume) {
-        Vivox.debug("Output volume %d", volume);
+        Vivox.debug("Output volume {}", volume);
         return outputDevice.setVolume(volume);
     }
 }

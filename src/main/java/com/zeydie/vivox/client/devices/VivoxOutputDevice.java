@@ -15,7 +15,7 @@ public class VivoxOutputDevice extends VivoxDevice {
         @NonNull val device = super.getDevice();
         val volume = super.getVolume();
 
-        Vivox.info("Set output device %s = %d", device, volume);
+        Vivox.info("Set output device '{}' = {}", device, volume);
 
         VivoxDevicesNative.setRenderDevice(device);
         VivoxDevicesNative.setSpeakerLevel(volume);

@@ -10,17 +10,17 @@ public final class VivoxChannelsNative {
             @NonNull final String sip,
             @NonNull final String token
     ) {
-        Vivox.debug("Vivox Join to channel %s %s %s", channel, sip, token);
+        Vivox.debug("Vivox Join to channel {} {} {}", channel, sip, token);
         VivoxAPI.joinChannel(channel, sip, token);
     }
 
     public static void leaveChannel(@NonNull final String channel) {
-        Vivox.debug("Vivox Leave from channel %s", channel);
+        Vivox.debug("Vivox Leave from channel {}", channel);
         VivoxAPI.leaveChannel(channel);
     }
 
     public static void setTalkChannel(@NonNull final String channel) {
-        Vivox.debug("Vivox Talk in channel %s", channel);
+        Vivox.debug("Vivox Talk in channel {}", channel);
         VivoxAPI.setTalkChannel(channel);
     }
 

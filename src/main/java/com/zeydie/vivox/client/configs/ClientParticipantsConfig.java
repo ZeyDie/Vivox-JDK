@@ -1,6 +1,7 @@
 package com.zeydie.vivox.client.configs;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.zeydie.vivox.client.api.data.ClientParticipantData;
 import com.zeydie.vivox.common.configs.FileConfig;
 import lombok.*;
@@ -19,12 +20,8 @@ public class ClientParticipantsConfig extends FileConfig {
     public ClientParticipantsConfig(@NotNull final Path directory) {
         super(directory.resolve("participants.json").toFile());
 
-        this.data = super.readData(
-                Data
-                        .builder()
-                        .participants(new HashMap<>())
-                        .build()
-        );
+        this.data = super.readData(Data.builder().build());
+        this.save();
     }
 
     public void save() {
@@ -34,8 +31,8 @@ public class ClientParticipantsConfig extends FileConfig {
     @lombok.Data
     @Builder
     public static class Data {
-        @NotNull
-        private Map<String, List<ClientParticipantData>> participants;
+        @Builder.Default
+        private @NotNull Map<String, List<ClientParticipantData>> participants = Maps.newHashMap();
 
         public @NotNull ClientParticipantData getParticipantData(
                 @NonNull final String user,

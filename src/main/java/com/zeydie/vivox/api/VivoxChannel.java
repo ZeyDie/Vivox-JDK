@@ -31,6 +31,14 @@ public class VivoxChannel {
         return this.sipData.getParticipantData().getChannelName();
     }
 
+    public @NotNull String getSip() {
+        return this.sipData.getSip();
+    }
+
+    public @NotNull String getToken() {
+        return this.tokenData.getToken();
+    }
+
     public boolean isConnecting() {
         return this.status == Status.CONNECTING;
     }
@@ -44,7 +52,7 @@ public class VivoxChannel {
     }
 
     public boolean equals(@NonNull final VivoxChannel vivoxChannel) {
-        return this.getSipData().getParticipantData().getChannelName().equals(vivoxChannel.getSipData().getParticipantData().getChannelName());
+        return this.getChannelName().equals(vivoxChannel.getChannelName());
     }
 
     public enum Status {
