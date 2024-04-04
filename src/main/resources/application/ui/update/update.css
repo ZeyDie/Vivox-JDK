@@ -1,0 +1,15 @@
+#pane {
+    -fx-background-color: #242424;
+    -fx-background-radius: 50px;
+}
+
+#head {
+    -fx-font-size: 20pt;
+    -fx-alignment: CENTER;
+}
+
+#info {
+    -fx-font-size: 12pt;
+    -fx-alignment: CENTER;
+    -fx-text-alignment: CENTER;
+}

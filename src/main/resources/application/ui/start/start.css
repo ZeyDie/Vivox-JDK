@@ -1,0 +1,9 @@
+#pane {
+    -fx-background-color: #242424;
+    -fx-background-radius: 50px;
+}
+
+#head {
+    -fx-font-size: 18pt;
+    -fx-alignment: CENTER;
+}

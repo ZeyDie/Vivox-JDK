@@ -3,7 +3,7 @@ package com.zeydie.vivox.client.configs;
 import com.google.common.collect.Lists;
 import com.zeydie.vivox.client.api.VivoxDevicesAPI;
 import com.zeydie.vivox.client.devices.VivoxInputDevice;
-import com.zeydie.vivox.common.configs.FileConfig;
+import com.zeydie.vivox.common.configs.base.FileConfig;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,7 +19,7 @@ public class ClientDevicesConfig extends FileConfig {
     private final @NotNull Data data;
 
     public ClientDevicesConfig(@NonNull final Path directory) {
-        super(directory.resolve("devices.json").toFile());
+        super(directory, "devices.json");
 
         this.data = super.readData(Data.builder().build());
         this.save();

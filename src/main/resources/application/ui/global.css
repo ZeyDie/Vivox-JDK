@@ -1,0 +1,14 @@
+.root {
+    -fx-background-color: TRANSPARENT;
+}
+
+.label {
+    -fx-font-family: "Arial";
+    -fx-text-fill: #bfbfbf;
+}
+
+#logo {
+    -fx-image: url('logo/logo.png');
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 20, 0, 0, 0);
+}

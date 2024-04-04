@@ -1,6 +1,6 @@
 package com.zeydie.vivox.client.configs;
 
-import com.zeydie.vivox.common.configs.FileConfig;
+import com.zeydie.vivox.common.configs.base.FileConfig;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +15,7 @@ public class ClientVivoxConfig extends FileConfig {
     private final @NotNull Data data;
 
     public ClientVivoxConfig(@NonNull final Path directory) {
-        super(directory.resolve("config.json").toFile());
+        super(directory, "config.json");
 
         this.data = super.readData(
                 Data

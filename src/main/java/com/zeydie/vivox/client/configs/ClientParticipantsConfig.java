@@ -3,12 +3,11 @@ package com.zeydie.vivox.client.configs;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.zeydie.vivox.client.api.data.ClientParticipantData;
-import com.zeydie.vivox.common.configs.FileConfig;
+import com.zeydie.vivox.common.configs.base.FileConfig;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,14 +17,14 @@ public class ClientParticipantsConfig extends FileConfig {
     private final @NotNull Data data;
 
     public ClientParticipantsConfig(@NotNull final Path directory) {
-        super(directory.resolve("participants.json").toFile());
+        super(directory, "participants.json");
 
         this.data = super.readData(Data.builder().build());
         this.save();
     }
 
     public void save() {
-        super.save(this.data);
+        this.save(this.data);
     }
 
     @lombok.Data

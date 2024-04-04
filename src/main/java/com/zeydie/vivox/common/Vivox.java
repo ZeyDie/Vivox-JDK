@@ -1,5 +1,6 @@
 package com.zeydie.vivox.common;
 
+import com.zeydie.vivox.common.configs.VivoxConfig;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
@@ -19,6 +20,8 @@ public abstract class Vivox implements IService {
     private static final @NotNull Path vivoxPath = Paths.get("vivox");
     @Getter
     private static final @NotNull Path configsPath = vivoxPath.resolve("configs");
+
+    private static final @NotNull VivoxConfig vivoxConfig = new VivoxConfig(configsPath);
 
     public static void info(
             @NonNull final String message,
