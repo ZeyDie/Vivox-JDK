@@ -20,6 +20,12 @@ repositories {
     }
 }
 
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 dependencies {
     // https://github.com/ZeyDie/Simple-GSON/releases/tag/2.10.x-1.2
     implementation group: 'com.zeydie', name: 'SGson', version: '2.10.x-1.2'

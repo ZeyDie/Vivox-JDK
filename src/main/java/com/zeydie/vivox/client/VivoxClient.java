@@ -22,6 +22,8 @@ public class VivoxClient extends Vivox {
 
     @Override
     public void pre() {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> exit()));
+
         vivoxClientAPI.pre();
         vivoxDevicesAPI.pre();
         vivoxChannelsAPI.pre();

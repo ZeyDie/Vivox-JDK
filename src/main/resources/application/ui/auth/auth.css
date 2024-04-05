@@ -1,0 +1,20 @@
+#pane {
+    -fx-background-color: #242424;
+    -fx-background-radius: 30px;
+}
+
+#loginField:focused {
+    -fx-font-size: 18pt;
+}
+
+#channelField:focused {
+    -fx-font-size: 18pt;
+}
+
+#authButton:hover {
+    -fx-font-size: 20px;
+}
+
+#authButton:focused {
+    -fx-font-size: 22px;
+}
