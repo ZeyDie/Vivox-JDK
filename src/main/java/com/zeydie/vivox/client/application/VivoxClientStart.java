@@ -51,6 +51,8 @@ public class VivoxClientStart extends Application {
 
         private final @Nullable String category;
         private final @NotNull String fx;
+        @Getter
+        private final @NotNull Scene scene = this.createScene();
 
         Scenes(@NonNull final String fx) {
             this(fx, fx);
@@ -74,12 +76,12 @@ public class VivoxClientStart extends Application {
         }
 
         @SneakyThrows
-        public @NotNull <T> T getFXMLLoader() {
+        private @NotNull <T> T getFXMLLoader() {
             return FXMLLoader.load(this.getClass().getResource("/application/ui/" + this.getPath()));
         }
 
         @SneakyThrows
-        public @NotNull Scene getScene() {
+        private @NotNull Scene createScene() {
             return new Scene(this.getFXMLLoader());
         }
     }
