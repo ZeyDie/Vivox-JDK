@@ -30,6 +30,9 @@ dependencies {
     // https://github.com/ZeyDie/Simple-GSON/releases/tag/2.10.x-1.2
     implementation group: 'com.zeydie', name: 'SGson', version: '2.10.x-1.2'
 
+    // https://mvnrepository.com/artifact/io.netty/netty-all
+    implementation group: 'io.netty', name: 'netty-all', version: '4.1.+'
+
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.10.+'
     // https://mvnrepository.com/artifact/com.google.guava/guava
@@ -46,6 +49,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.+'
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.+'
+
+    // https://mvnrepository.com/artifact/io.netty/netty-all
+    testImplementation group: 'io.netty', name: 'netty-all', version: '4.1.+'
 
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.+'
