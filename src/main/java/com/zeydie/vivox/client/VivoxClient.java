@@ -6,6 +6,7 @@ import com.zeydie.vivox.client.api.VivoxClientParticipantAPI;
 import com.zeydie.vivox.client.api.VivoxDevicesAPI;
 import com.zeydie.vivox.common.Vivox;
 import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
@@ -19,6 +20,10 @@ public class VivoxClient extends Vivox {
     private static final @NotNull VivoxChannelsAPI vivoxChannelsAPI = new VivoxChannelsAPI();
     @Getter
     private static final @NotNull VivoxClientParticipantAPI vivoxClientParticipantAPI = new VivoxClientParticipantAPI();
+
+    @Setter
+    @Getter
+    private static @NotNull String username = "Steve";
 
     @Override
     public void pre() {

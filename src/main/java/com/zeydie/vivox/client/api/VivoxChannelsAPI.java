@@ -96,7 +96,7 @@ public final class VivoxChannelsAPI implements IService {
         vivoxChannel.setStatus(VivoxChannel.Status.CONNECTING);
 
         VivoxChannelsNative.joinChannel(
-                vivoxChannel.getChannelName(),
+                vivoxChannel.getParticipantChannel(),
                 vivoxChannel.getSip(),
                 vivoxChannel.getToken()
         );

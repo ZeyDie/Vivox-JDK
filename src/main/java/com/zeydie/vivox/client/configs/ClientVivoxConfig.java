@@ -20,8 +20,8 @@ public class ClientVivoxConfig extends FileConfig {
         this.data = super.readData(
                 Data
                         .builder()
-                        .server("https://unity.vivox.com/appconfig/")
-                        .user("90715-vivox-90002-udash")
+                        .server("https://unity.vivox.com/appconfig/user")
+                        .user("user")
                         .build()
         );
         this.save();

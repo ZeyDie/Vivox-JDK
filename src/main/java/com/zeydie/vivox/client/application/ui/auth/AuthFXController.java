@@ -1,5 +1,15 @@
 package com.zeydie.vivox.client.application.ui.auth;
 
+import com.zeydie.vivox.api.VivoxChannel;
+import com.zeydie.vivox.api.data.SipData;
+import com.zeydie.vivox.api.data.TokenData;
+import com.zeydie.vivox.client.VivoxClient;
+import com.zeydie.vivox.client.api.VivoxChannelsAPI;
+import com.zeydie.vivox.client.api.VivoxClientAPI;
+import com.zeydie.vivox.client.api.natives.VivoxClientNative;
+import com.zeydie.vivox.client.application.VivoxClientStart;
+import com.zeydie.vivox.server.VivoxServer;
+import com.zeydie.vivox.server.api.data.ServerVivoxData;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -79,7 +89,63 @@ public final class AuthFXController {
 
         this.resetErrorLoginField();
         this.resetErrorChannelField();
+
+        if (!VivoxClient.getUsername().equals(login))
+            if (VivoxClientAPI.isLogin()) {
+                VivoxClientStart.getVivoxClient().exit();
+                VivoxClientStart.getVivoxClient().init();
+            }
+
+        VivoxClient.setUsername(login);
+
+        //TODO Test
+        val data = VivoxServer.getVivoxServerAPI().getServerVivoxConfig().getData();
+        val secretKey = data.getSecretKey();
+        val serverVivoxData = ServerVivoxData
+                .builder()
+                .player(login)
+                .user(data.getUser())
+                .channelName(channel)
+                .domain(data.getDomain())
+                .exp(System.currentTimeMillis() / 1000 + 5 * 60 * 60)
+                .build();
+
+        if (!VivoxClientAPI.isLogin())
+            this.loginVivox(login, serverVivoxData, secretKey);
+
+        this.joinVivoxChannel(channel, serverVivoxData, secretKey);
     }
+
+    //TODO Test start
+    private void loginVivox(
+            @NonNull final String login,
+            @NonNull final ServerVivoxData serverVivoxData,
+            @NonNull final String secretKey
+    ) {
+        VivoxClientNative.login(
+                login,
+                serverVivoxData.getLoginToken(secretKey)
+        );
+    }
+
+    private void joinVivoxChannel(
+            @NonNull final String channel,
+            @NonNull final ServerVivoxData serverVivoxData,
+            @NonNull final String secretKey
+    ) {
+        @NonNull val vivoxChannel = new VivoxChannel(
+                new SipData(
+                        serverVivoxData.getUser(),
+                        channel,
+                        VivoxServer.getVivoxServerAPI().getServerVivoxConfig().getData().getDomain()
+                ),
+                new TokenData(serverVivoxData.getJoinToken(secretKey))
+        );
+
+        VivoxChannelsAPI.setVivoxChannel(vivoxChannel);
+        VivoxChannelsAPI.joinToChannel(vivoxChannel);
+    }
+    //TODO Test end
 
     private void setErrorLoginField() {
         this.setErrorField(this.loginField);

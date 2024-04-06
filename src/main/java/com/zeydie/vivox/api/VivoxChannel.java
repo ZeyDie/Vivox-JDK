@@ -31,6 +31,10 @@ public class VivoxChannel {
         return this.sipData.getParticipantData().getChannelName();
     }
 
+    public @NotNull String getParticipantChannel() {
+        return this.sipData.getParticipantData().getParticipant();
+    }
+
     public @NotNull String getSip() {
         return this.sipData.getSip();
     }

@@ -1,5 +1,6 @@
 package com.zeydie.vivox.client.application;
 
+import com.zeydie.vivox.client.VivoxClient;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,7 @@ import javafx.stage.StageStyle;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,6 +23,8 @@ public class VivoxClientStart extends Application {
 
     @Getter
     private static Stage stage;
+    @Getter
+    private static final @NotNull VivoxClient vivoxClient = new VivoxClient();
 
     @SneakyThrows
     @Override
@@ -29,6 +33,10 @@ public class VivoxClientStart extends Application {
         this.stage.initStyle(StageStyle.TRANSPARENT);
 
         this.toScene(Scenes.AUTH.getScene());
+
+        vivoxClient.pre();
+        vivoxClient.init();
+        vivoxClient.post();
     }
 
     public static void toScene(@NonNull final Scene scene) {
@@ -44,6 +52,7 @@ public class VivoxClientStart extends Application {
         );
     }
 
+    @Log4j2
     public enum Scenes {
         AUTH("auth"),
         UPDATE("update"),
@@ -51,8 +60,7 @@ public class VivoxClientStart extends Application {
 
         private final @Nullable String category;
         private final @NotNull String fx;
-        @Getter
-        private final @NotNull Scene scene = this.createScene();
+        private @NotNull Scene scene;
 
         Scenes(@NonNull final String fx) {
             this(fx, fx);
@@ -77,12 +85,18 @@ public class VivoxClientStart extends Application {
 
         @SneakyThrows
         private @NotNull <T> T getFXMLLoader() {
-            return FXMLLoader.load(this.getClass().getResource("/application/ui/" + this.getPath()));
+            @NonNull val path = "/application/ui/" + this.getPath();
+
+            log.debug("Loading fxml {}", path);
+
+            return FXMLLoader.load(this.getClass().getResource(path));
         }
 
         @SneakyThrows
-        private @NotNull Scene createScene() {
-            return new Scene(this.getFXMLLoader());
+        public @NotNull Scene getScene() {
+            if (this.scene != null) return this.scene;
+
+            return this.scene = new Scene(this.getFXMLLoader());
         }
     }
 }

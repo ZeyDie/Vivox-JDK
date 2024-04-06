@@ -6,12 +6,12 @@ import com.zeydie.vivox.client.api.natives.VivoxClientNative;
 import com.zeydie.vivox.server.VivoxServer;
 import com.zeydie.vivox.server.api.data.ServerVivoxData;
 import lombok.SneakyThrows;
-import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-@Log
+@Log4j2
 public class VivoxLoginTest {
     private static final VivoxClient vivoxClient = new VivoxClient();
     private static final VivoxServer vivoxServer = new VivoxServer();
@@ -19,12 +19,13 @@ public class VivoxLoginTest {
     @SneakyThrows
     @Test
     public void login() {
-        vivoxClient.pre();
         vivoxServer.pre();
-        vivoxClient.init();
         vivoxServer.init();
-        vivoxClient.post();
         vivoxServer.post();
+
+        vivoxClient.pre();
+        vivoxClient.init();
+        vivoxClient.post();
 
         val data = VivoxServer.getVivoxServerAPI().getServerVivoxConfig().getData();
         val player = "ZeyDie";
@@ -38,10 +39,10 @@ public class VivoxLoginTest {
                 .build()
                 .getLoginToken(secretKey);
 
-        log.info("Data: " + data);
-        log.info("Player: " + player);
-        log.info("SecretKey: " + secretKey);
-        log.info("LoginToken: " + loginToken);
+        log.debug("Data: {}", data);
+        log.debug("Player: {}", player);
+        log.debug("SecretKey: {}", secretKey);
+        log.debug("LoginToken: {}", loginToken);
 
         VivoxClientNative.login(
                 player,
@@ -49,5 +50,7 @@ public class VivoxLoginTest {
         );
 
         Assertions.assertEquals(VivoxClientAPI.getVivoxStateHandler().getLastErrorCode(), 0);
+
+        vivoxClient.exit();
     }
 }
