@@ -1,6 +1,7 @@
 package com.zeydie.vivox.client.application;
 
 import com.zeydie.vivox.client.VivoxClient;
+import com.zeydie.vivox.common.Vivox;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,6 @@ import javafx.stage.StageStyle;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -61,7 +61,6 @@ public class VivoxClientStart extends Application {
         );
     }
 
-    @Log4j2
     public enum Scenes {
         AUTH("auth"),
         UPDATE("update"),
@@ -96,7 +95,7 @@ public class VivoxClientStart extends Application {
         private @NotNull <T> T getFXMLLoader() {
             @NonNull val path = "/application/ui/" + this.getPath();
 
-            log.debug("Loading fxml {}", path);
+            Vivox.debug("Loading fxml {}", path);
 
             return FXMLLoader.load(this.getClass().getResource(path));
         }

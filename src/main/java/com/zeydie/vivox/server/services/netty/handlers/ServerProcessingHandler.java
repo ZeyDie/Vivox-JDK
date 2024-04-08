@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.zeydie.vivox.api.VivoxChannel;
 import com.zeydie.vivox.api.data.SipData;
 import com.zeydie.vivox.api.data.TokenData;
+import com.zeydie.vivox.common.Vivox;
 import com.zeydie.vivox.common.services.netty.handlers.ProcessingHandler;
 import com.zeydie.vivox.common.services.netty.packets.RequestPackets;
 import com.zeydie.vivox.common.services.netty.packets.ResponsePackets;
@@ -16,7 +17,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.socket.SocketChannel;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,7 +24,6 @@ import org.jetbrains.annotations.Nullable;
 import static com.zeydie.vivox.common.services.netty.packets.ResponsePackets.RESPONSE_JOIN_CHANNEL;
 import static com.zeydie.vivox.common.services.netty.packets.ResponsePackets.RESPONSE_LOGIN;
 
-@Log4j2
 public class ServerProcessingHandler extends ProcessingHandler {
     private final @NonNull Gson gson = new Gson();
 
@@ -36,7 +35,7 @@ public class ServerProcessingHandler extends ProcessingHandler {
     ) {
         @NonNull val packetId = ByteBufUtil.readString(byteBuf);
 
-        log.debug("Packet {}", packetId);
+        Vivox.debug("Packet {}", packetId);
 
         @NonNull val data = VivoxServer.getVivoxServerAPI().getServerVivoxConfig().getData();
         @NonNull val secretKey = data.getSecretKey();
@@ -91,7 +90,7 @@ public class ServerProcessingHandler extends ProcessingHandler {
 
                     NettyServerAPI.sendPacketToClient((SocketChannel) channelHandlerContext.channel(), buffer);
                 }
-                default -> log.error("Can't found packet {}", packetId);
+                default -> Vivox.error("Can't found packet {}", packetId);
             }
         } else {
             @Nullable val responsePackets = ResponsePackets.valueOf(packetId);
@@ -100,7 +99,7 @@ public class ServerProcessingHandler extends ProcessingHandler {
                 case RESPONSE_LOGIN -> {
 
                 }
-                default -> log.error("Can't found packet {}", packetId);
+                default -> Vivox.error("Can't found packet {}", packetId);
             }
         }
     }

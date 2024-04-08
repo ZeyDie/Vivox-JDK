@@ -1,27 +1,26 @@
 package com.zeydie.vivox.common.services.netty.handlers;
 
+import com.zeydie.vivox.common.Vivox;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.NonNull;
-import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import org.jetbrains.annotations.NotNull;
 
-@Log4j2
 public abstract class ProcessingHandler extends ChannelInboundHandlerAdapter {
     private ByteBuf byteBuf;
 
     @Override
     public void handlerAdded(@NotNull final ChannelHandlerContext channelHandlerContext) {
-        log.debug("Handler added");
+        Vivox.debug("Handler added");
 
         this.byteBuf = channelHandlerContext.alloc().buffer(4);
     }
 
     @Override
     public void handlerRemoved(@NotNull final ChannelHandlerContext channelHandlerContext) {
-        log.debug("Handler removed");
+        Vivox.debug("Handler removed");
 
         this.byteBuf.release();
         this.byteBuf = null;

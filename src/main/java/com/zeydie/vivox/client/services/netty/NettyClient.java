@@ -1,6 +1,7 @@
 package com.zeydie.vivox.client.services.netty;
 
 import com.zeydie.vivox.client.services.netty.handlers.ClientProcessingHandler;
+import com.zeydie.vivox.common.Vivox;
 import com.zeydie.vivox.common.services.netty.NettyService;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -13,10 +14,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
 
-@Log4j2
 public class NettyClient extends NettyService implements INettyClientTransfer {
     private final @NotNull EventLoopGroup workerGroup = new NioEventLoopGroup(NettyService.getClientThreads());
 
@@ -36,7 +35,7 @@ public class NettyClient extends NettyService implements INettyClientTransfer {
                 new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(@NotNull final SocketChannel socketChannel) throws Exception {
-                        log.debug("Init socket channel {}", socketChannel);
+                        Vivox.debug("Init socket channel {}", socketChannel);
 
                         serverSocketChannel = socketChannel;
                         serverSocketChannel.pipeline().addLast(new ClientProcessingHandler());
