@@ -19,7 +19,6 @@ public class ServerVivoxConfig extends FileConfig {
                 Data
                         .builder()
                         .domain("mt1s.vivox.com")
-                        .channel("global")
                         .user("user")
                         .secretKey("secretKey")
                         .build()
@@ -35,7 +34,6 @@ public class ServerVivoxConfig extends FileConfig {
     @Builder
     public static class Data {
         private @NotNull String domain;
-        private @NotNull String channel;
         private @NotNull String user;
         private @NotNull String secretKey;
     }

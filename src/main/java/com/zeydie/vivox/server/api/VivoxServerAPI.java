@@ -1,6 +1,6 @@
 package com.zeydie.vivox.server.api;
 
-import com.zeydie.vivox.common.IService;
+import com.zeydie.vivox.common.interfaces.IService;
 import com.zeydie.vivox.server.VivoxServer;
 import com.zeydie.vivox.server.configs.ServerVivoxConfig;
 import lombok.Getter;

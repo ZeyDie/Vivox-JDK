@@ -8,13 +8,14 @@ import com.zeydie.vivox.server.api.data.ServerVivoxData;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @Log4j2
 public class VivoxLoginTest {
-    private static final VivoxClient vivoxClient = new VivoxClient();
-    private static final VivoxServer vivoxServer = new VivoxServer();
+    private static final @NotNull VivoxClient vivoxClient = new VivoxClient();
+    private static final @NotNull VivoxServer vivoxServer = new VivoxServer();
 
     @SneakyThrows
     @Test
@@ -51,6 +52,6 @@ public class VivoxLoginTest {
 
         Assertions.assertEquals(VivoxClientAPI.getVivoxStateHandler().getLastErrorCode(), 0);
 
-        vivoxClient.exit();
+        vivoxClient.close();
     }
 }

@@ -20,7 +20,7 @@ public class VivoxConfig extends FileConfig {
         this.data = super.readData(
                 Data
                         .builder()
-                        .server("https://mt1s.www.vivox.com/api2")
+                        .server("https://unity.vivox.com/appconfig/user")
                         .user("user")
                         .build()
         );
@@ -36,5 +36,9 @@ public class VivoxConfig extends FileConfig {
     public static class Data {
         private @NotNull String server;
         private @NotNull String user;
+
+        public @NotNull String getParticipant(@NonNull final String player) {
+            return "." + this.user + "." + player + ".";
+        }
     }
 }

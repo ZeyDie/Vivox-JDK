@@ -1,9 +1,6 @@
 package com.zeydie.vivox.client;
 
-import com.zeydie.vivox.client.api.VivoxChannelsAPI;
-import com.zeydie.vivox.client.api.VivoxClientAPI;
-import com.zeydie.vivox.client.api.VivoxClientParticipantAPI;
-import com.zeydie.vivox.client.api.VivoxDevicesAPI;
+import com.zeydie.vivox.client.api.*;
 import com.zeydie.vivox.common.Vivox;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,18 +18,26 @@ public class VivoxClient extends Vivox {
     @Getter
     private static final @NotNull VivoxClientParticipantAPI vivoxClientParticipantAPI = new VivoxClientParticipantAPI();
 
+    @Getter
+    private static final @NotNull NettyClientAPI nettyClientAPI = new NettyClientAPI();
+
     @Setter
     @Getter
-    private static @NotNull String username = "Steve";
+    private static @NotNull String username = "ZeyDie";
+    @Setter
+    @Getter
+    private static @NotNull String channel = "unison";
 
     @Override
     public void pre() {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> exit()));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> close()));
 
         vivoxClientAPI.pre();
         vivoxDevicesAPI.pre();
         vivoxChannelsAPI.pre();
         vivoxClientParticipantAPI.pre();
+
+        nettyClientAPI.pre();
     }
 
     @Override
@@ -41,6 +46,8 @@ public class VivoxClient extends Vivox {
         vivoxDevicesAPI.init();
         vivoxChannelsAPI.init();
         vivoxClientParticipantAPI.init();
+
+        nettyClientAPI.init();
     }
 
     @Override
@@ -49,10 +56,15 @@ public class VivoxClient extends Vivox {
         vivoxDevicesAPI.post();
         vivoxChannelsAPI.post();
         vivoxClientParticipantAPI.post();
+
+        nettyClientAPI.post();
     }
 
-    public void exit() {
-        vivoxClientAPI.exit();
+    @Override
+    public void close() {
+        vivoxClientAPI.close();
+
+        nettyClientAPI.close();
     }
 
     public static @NotNull Path getConfigsPath() {

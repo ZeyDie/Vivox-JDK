@@ -1,7 +1,7 @@
 package client;
 
 import com.zeydie.vivox.client.VivoxClient;
-import lombok.extern.java.Log;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class VivoxClientTest {
-    private static final VivoxClient vivoxClient = new VivoxClient();
+    private static final @NotNull VivoxClient vivoxClient = new VivoxClient();
 
     @Test
     @Order(2)
@@ -32,6 +32,6 @@ public class VivoxClientTest {
     @Test
     @Order(5)
     public void logout() {
-        vivoxClient.exit();
+        vivoxClient.close();
     }
 }

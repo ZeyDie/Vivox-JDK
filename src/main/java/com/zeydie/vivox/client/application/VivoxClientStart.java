@@ -39,6 +39,15 @@ public class VivoxClientStart extends Application {
         vivoxClient.post();
     }
 
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+
+        vivoxClient.close();
+
+        Runtime.getRuntime().exit(0);
+    }
+
     public static void toScene(@NonNull final Scene scene) {
         Platform.runLater(
                 () -> {

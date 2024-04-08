@@ -3,19 +3,16 @@ package com.zeydie.vivox.client.api;
 import com.zeydie.vivox.client.VivoxClient;
 import com.zeydie.vivox.client.api.natives.VivoxClientNative;
 import com.zeydie.vivox.client.api.natives.VivoxClientParticipantNative;
-import com.zeydie.vivox.client.configs.ClientVivoxConfig;
 import com.zeydie.vivox.client.handlers.ParticipantHandler;
 import com.zeydie.vivox.client.handlers.VivoxStateHandler;
-import com.zeydie.vivox.common.IService;
 import com.zeydie.vivox.common.Vivox;
+import com.zeydie.vivox.common.interfaces.IServiceCloseable;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
 
-public final class VivoxClientAPI implements IService {
-    private @NotNull String player = "ZeyDie";
-
+public final class VivoxClientAPI implements IServiceCloseable {
     @Getter
     private static final @NotNull VivoxStateHandler vivoxStateHandler = new VivoxStateHandler();
     @Getter
@@ -27,9 +24,6 @@ public final class VivoxClientAPI implements IService {
     @Setter
     @Getter
     private static boolean login;
-
-    @Getter
-    private static final @NotNull ClientVivoxConfig clientVivoxConfig = new ClientVivoxConfig(VivoxClient.getConfigsPath());
 
     @Override
     public void pre() {
@@ -45,12 +39,13 @@ public final class VivoxClientAPI implements IService {
 
         VivoxClientParticipantNative.setParticipantCallbacks(participantHandler);
 
-        @NonNull val data = clientVivoxConfig.getData();
+        @NonNull val data = Vivox.getVivoxConfig().getData();
+        @NonNull val username = VivoxClient.getUsername();
 
         VivoxClientNative.init(
                 data.getServer(),
-                data.getParticipant(this.player),
-                this.player
+                data.getParticipant(username),
+                username
         );
         VivoxClientNative.connect();
 
@@ -63,7 +58,8 @@ public final class VivoxClientAPI implements IService {
 
     }
 
-    public void exit() {
+    @Override
+    public void close() {
         Vivox.info("VivoxClient exit");
 
         VivoxChannelsAPI.leaveFromAllChannels();

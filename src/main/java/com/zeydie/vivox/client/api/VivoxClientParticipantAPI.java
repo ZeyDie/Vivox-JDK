@@ -2,7 +2,7 @@ package com.zeydie.vivox.client.api;
 
 import com.zeydie.vivox.client.VivoxClient;
 import com.zeydie.vivox.client.configs.ClientParticipantsConfig;
-import com.zeydie.vivox.common.IService;
+import com.zeydie.vivox.common.interfaces.IService;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="500.0" minWidth="450.0" prefHeight="500.0" prefWidth="450.0" stylesheets="@../global.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeydie.vivox.client.application.ui.auth.AuthFXController">
+<AnchorPane minHeight="500.0" minWidth="450.0" prefHeight="500.0" prefWidth="450.0" stylesheets="@../global.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeydie.vivox.client.application.ui.auth.AuthFXController">
     <children>
         <Pane id="pane" fx:id="pane" prefHeight="500.0" prefWidth="450" styleClass="pane" stylesheets="@auth.css">
             <children>

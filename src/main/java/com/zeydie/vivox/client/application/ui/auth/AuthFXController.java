@@ -1,15 +1,9 @@
 package com.zeydie.vivox.client.application.ui.auth;
 
-import com.zeydie.vivox.api.VivoxChannel;
-import com.zeydie.vivox.api.data.SipData;
-import com.zeydie.vivox.api.data.TokenData;
 import com.zeydie.vivox.client.VivoxClient;
-import com.zeydie.vivox.client.api.VivoxChannelsAPI;
 import com.zeydie.vivox.client.api.VivoxClientAPI;
-import com.zeydie.vivox.client.api.natives.VivoxClientNative;
-import com.zeydie.vivox.client.application.VivoxClientStart;
-import com.zeydie.vivox.server.VivoxServer;
-import com.zeydie.vivox.server.api.data.ServerVivoxData;
+import com.zeydie.vivox.common.services.netty.packets.RequestPackets;
+import com.zeydie.vivox.common.services.netty.utils.ByteBufUtil;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -92,14 +86,20 @@ public final class AuthFXController {
 
         if (!VivoxClient.getUsername().equals(login))
             if (VivoxClientAPI.isLogin()) {
-                VivoxClientStart.getVivoxClient().exit();
-                VivoxClientStart.getVivoxClient().init();
+                VivoxClient.getVivoxClientAPI().close();
+                VivoxClient.getVivoxClientAPI().init();
             }
 
         VivoxClient.setUsername(login);
+        VivoxClient.setChannel(channel);
 
+        @NonNull val byteBuf = RequestPackets.REQUEST_LOGIN.createByteBufPacket();
+
+        ByteBufUtil.writeString(byteBuf, VivoxClient.getUsername());
+
+        VivoxClient.getNettyClientAPI().sendPacketToServer(byteBuf);
         //TODO Test
-        val data = VivoxServer.getVivoxServerAPI().getServerVivoxConfig().getData();
+        /*val data = VivoxServer.getVivoxServerAPI().getServerVivoxConfig().getData();
         val secretKey = data.getSecretKey();
         val serverVivoxData = ServerVivoxData
                 .builder()
@@ -113,11 +113,11 @@ public final class AuthFXController {
         if (!VivoxClientAPI.isLogin())
             this.loginVivox(login, serverVivoxData, secretKey);
 
-        this.joinVivoxChannel(channel, serverVivoxData, secretKey);
+        this.joinVivoxChannel(channel, serverVivoxData, secretKey);*/
     }
 
     //TODO Test start
-    private void loginVivox(
+    /*private void loginVivox(
             @NonNull final String login,
             @NonNull final ServerVivoxData serverVivoxData,
             @NonNull final String secretKey
@@ -144,7 +144,7 @@ public final class AuthFXController {
 
         VivoxChannelsAPI.setVivoxChannel(vivoxChannel);
         VivoxChannelsAPI.joinToChannel(vivoxChannel);
-    }
+    }*/
     //TODO Test end
 
     private void setErrorLoginField() {
