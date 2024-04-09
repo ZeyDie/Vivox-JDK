@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class ClientParticipantsConfig extends FileConfig {
     private final @NotNull Data data;
 

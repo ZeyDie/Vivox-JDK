@@ -63,6 +63,25 @@ dependencies {
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.+'
 }
 
+jar {
+    def librariesFolder = "libraries"
+
+    configurations.runtimeClasspath.collect {
+        def path = it.getAbsolutePath();
+
+        copy  {
+            from path
+            into "$buildDir/libs/$librariesFolder"
+        }
+    }
+
+    manifest {
+        attributes(
+                "Class-Path": configurations.runtimeClasspath.collect { "$librariesFolder/" + it.getName() }.join(' ')
+        )
+    }
+}
+
 test {
     useJUnitPlatform()
 }

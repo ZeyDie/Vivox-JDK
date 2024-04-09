@@ -10,7 +10,7 @@ import lombok.val;
 import org.jetbrains.annotations.NotNull;
 
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class VivoxInputDevice extends VivoxDevice {
     private boolean banned;
     private boolean talking;

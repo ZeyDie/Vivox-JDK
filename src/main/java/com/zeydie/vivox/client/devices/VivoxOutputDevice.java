@@ -8,7 +8,7 @@ import lombok.NonNull;
 import lombok.val;
 
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class VivoxOutputDevice extends VivoxDevice {
     @Override
     public void init() {

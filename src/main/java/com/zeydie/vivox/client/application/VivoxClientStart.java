@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class VivoxClientStart extends Application {
-    public static void main(@Nullable String[] args) {
+    public static void main(@Nullable final String[] args) {
         launch(args);
     }
 
@@ -32,11 +32,13 @@ public class VivoxClientStart extends Application {
         this.stage = stage;
         this.stage.initStyle(StageStyle.TRANSPARENT);
 
-        this.toScene(Scenes.AUTH.getScene());
+        //this.toScene(Scenes.AUTH.getScene());
 
         vivoxClient.pre();
         vivoxClient.init();
         vivoxClient.post();
+
+        this.toScene(Scenes.CHANNEL.getScene());
     }
 
     @Override
@@ -63,6 +65,7 @@ public class VivoxClientStart extends Application {
 
     public enum Scenes {
         AUTH("auth"),
+        CHANNEL("channel"),
         UPDATE("update"),
         START("start");
 

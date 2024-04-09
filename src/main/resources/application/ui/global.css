@@ -2,6 +2,10 @@
     -fx-background-color: TRANSPARENT;
 }
 
+.scroll-pane > .viewport {
+    -fx-background-color: rgba(36, 36, 36, 1);
+}
+
 .label,
 .text-field,
 .button {
@@ -33,6 +37,16 @@
     -fx-border-color: rgba(255, 0, 0, 0.3);
 }
 
+#root {
+    -fx-background-color: #242424;
+    -fx-background-radius: 30px;
+}
+
+#progress {
+    -fx-background-color: rgba(16, 16, 16, 0.8);
+    -fx-background-radius: 30px;
+}
+
 #logo {
     -fx-image: url('logo/logo.png');
 
@@ -41,4 +55,8 @@
 
 #errorLabel {
     -fx-text-fill: rgba(255, 0, 0, 0.8);
+}
+
+#progress-gif {
+    -fx-image: url('progress/head-pat.gif');
 }

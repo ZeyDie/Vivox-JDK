@@ -59,7 +59,7 @@ public class ClientProcessingHandler extends ProcessingHandler {
                 case RESPONSE_JOIN_CHANNEL -> {
                     @NonNull val vivoxChannel = this.gson.fromJson(ByteBufUtil.readString(byteBuf), VivoxChannel.class);
 
-                    Vivox.debug("vivoxChannel {}", vivoxChannel);
+                    Vivox.debug("VivoxChannel {}", vivoxChannel);
 
                     VivoxChannelsAPI.setVivoxChannel(vivoxChannel);
                     VivoxChannelsAPI.joinToChannel(vivoxChannel);

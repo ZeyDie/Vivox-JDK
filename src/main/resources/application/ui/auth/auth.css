@@ -1,8 +1,3 @@
-#pane {
-    -fx-background-color: #242424;
-    -fx-background-radius: 30px;
-}
-
 #loginField:focused {
     -fx-font-size: 18pt;
 }

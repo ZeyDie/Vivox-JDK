@@ -13,14 +13,14 @@ public abstract class ProcessingHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void handlerAdded(@NotNull final ChannelHandlerContext channelHandlerContext) {
-        Vivox.debug("Handler added");
+        Vivox.debug("Connected to {}", channelHandlerContext.channel().remoteAddress());
 
         this.byteBuf = channelHandlerContext.alloc().buffer(4);
     }
 
     @Override
     public void handlerRemoved(@NotNull final ChannelHandlerContext channelHandlerContext) {
-        Vivox.debug("Handler removed");
+        Vivox.debug("Disconnected from {}", channelHandlerContext.channel().remoteAddress());
 
         this.byteBuf.release();
         this.byteBuf = null;
@@ -40,6 +40,8 @@ public abstract class ProcessingHandler extends ChannelInboundHandlerAdapter {
             @NotNull final ChannelHandlerContext channelHandlerContext,
             @NotNull final Object msg
     ) throws Exception {
+        Vivox.debug("Connection reading message {}", channelHandlerContext.channel().remoteAddress());
+
         @NonNull val channelByteBuf = (ByteBuf) msg;
 
         this.byteBuf.writeBytes(channelByteBuf);

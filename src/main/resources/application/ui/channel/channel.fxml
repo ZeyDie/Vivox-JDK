@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane minHeight="500.0" minWidth="450.0" prefHeight="500.0" prefWidth="450.0" stylesheets="@../global.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeydie.vivox.client.application.ui.channel.ChannelFXController">
+    <children>
+        <Pane id="root" fx:id="root" prefHeight="500.0" prefWidth="450" styleClass="root" stylesheets="@channel.css">
+         <children>
+            <ScrollPane id="participants" layoutX="25.0" layoutY="25.0" prefHeight="450.0" prefWidth="300.0" styleClass="participants">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="440.0" prefWidth="290.0" />
+              </content>
+            </ScrollPane>
+         </children></Pane>
+        <Pane id="progress" fx:id="progress" prefHeight="500.0" prefWidth="450.0" styleClass="progress" visible="false">
+            <children>
+                <ImageView id="progress-gif" fitHeight="100.0" fitWidth="100.0" layoutX="175.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" styleClass="progress-gif" />
+                <Label id="progress-label" alignment="CENTER" layoutY="300.0" prefHeight="40.0" prefWidth="450.0" styleClass="progress-label" text="ЗАГРУЗКА" wrapText="true">
+                    <font>
+                        <Font size="22.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

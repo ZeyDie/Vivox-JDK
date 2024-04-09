@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class ClientDevicesConfig extends FileConfig {
     private final @NotNull Data data;
 

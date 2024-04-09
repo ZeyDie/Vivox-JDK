@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.nio.file.Path;
 
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class VivoxConfig extends FileConfig {
     private final @NotNull Data data;
 

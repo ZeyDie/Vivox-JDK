@@ -8,7 +8,7 @@ import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class VivoxChannel {
     private @NotNull Status status = Status.DISCONNECTED;
     private final @NonNull SipData sipData;
