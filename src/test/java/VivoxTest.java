@@ -1,5 +1,3 @@
-package client;
-
 import com.zeydie.vivox.client.VivoxClient;
 import com.zeydie.vivox.common.services.netty.packets.RequestPackets;
 import com.zeydie.vivox.common.services.netty.utils.ByteBufUtil;
