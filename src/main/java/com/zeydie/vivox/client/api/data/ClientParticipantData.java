@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 public class ClientParticipantData extends ParticipantData {
     private boolean banned;
     private int inputVolume;

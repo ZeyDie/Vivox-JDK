@@ -3,10 +3,12 @@ package com.zeydie.vivox.api;
 import com.zeydie.vivox.api.data.SipData;
 import com.zeydie.vivox.api.data.TokenData;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 @Data
+@EqualsAndHashCode
 public class VivoxChannel {
     private @NotNull Status status = Status.DISCONNECTED;
     private final @NonNull SipData sipData;
