@@ -54,7 +54,7 @@ dependencies {
     testImplementation group: 'io.netty', name: 'netty-all', version: '4.1.+'
 
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.+'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.13.+'
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.10.+'
 
